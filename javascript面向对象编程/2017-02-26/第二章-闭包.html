@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>闭包</title>
+</head>
+<body>
+	<input type="text" id="main">
+<script>
+	//得到id为main的元素
+	// var obj = document.getElementById('main');
+	// //改变它的样式
+	// obj.style.border = '1px solid red';
+	//初始化一个1秒后被调用的回调函数
+	// setTimeout(function(){
+	// 	//次函数将隐藏该元素
+	// 	obj.style.display = 'none';
+	// },1000);
+
+	// //用来显示延迟消息的通用函数
+	// function delayedAlert(msg,time){
+	// 	//初始化一个被封套的函数
+	// 	setTimeout(function(){
+	// 		alert(msg);
+	// 	},time);
+	// }
+	// delayedAlert('welcome!',2000);
+
+	//使用闭包的函数currying
+	function addGenerator(num){
+		//返回一个简单函数用来计算两个数的加法
+		//其中第一个数字从生成器中借用
+		num++;
+		return function(toAdd){
+			return num + toAdd
+		};
+	}
+	var addFive = addGenerator(5);
+	// addFive = function(toAdd){
+	// 	return num + toAdd
+	// }
+	console.log(addFive(4) == 9);
+	console.log(addFive(4));
+
+	//使用匿名函数从全局作用域隐藏变量
+	(function(){
+		//这个变量通常情况下是全局
+		var msg = 'Thanks for visiting';
+		//为全局对象绑定新的函数
+		window.onload = function(){
+			//使用了隐藏的变量
+			console.log(msg);
+		}
+	//关闭匿名函数并执行之
+	})();
+
+	//使用匿名函数激发一个创建多个闭包函数所需的作用域
+	var obj = document.getElementById('main');
+	var items = ['click','keypress'];
+	//遍历items的每一项
+	for(var i = 0; i <items.length;i++){
+		//提供父级函数中该变量最后的值
+		//用自执行的匿名函数来激发作用域
+		(function(){
+			//在这些作用域内存储值
+			var item = items[i];
+			//为obj元素绑定函数
+			obj["on"+item] = function(){
+				//item引用一个父级的变量
+				//该变量在此for循环的上文中已被成功的scoped
+				console.log('Thanks for your' + item);
+			}
+		})();
+	}
+//值的分配
+var objectRef = new Object();
+
+
+
+</script>
+</body>
+</html>

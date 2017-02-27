@@ -115,7 +115,7 @@ function displayError(msg){
 //依据参数列表来严格地检查一个变量列表的类型
 function strict(types,args){
 	//确保参数的数目和类型匹配
-	if(typeof.length != args.length){
+	if(types.length != args.length){
 		//如果长度不匹配，则抛出异常
 		throw "Invalid number of arguments. EXpected" + types.length +",received "+ args.length + "instead.";
 	}
@@ -148,7 +148,19 @@ if(true){
 	//注意：这仍然是在全局作用域中
 	var foo = "new test";
 }
-//
+//foo现在等于new test
+console.log(foo == 'new test');
+//创建一个修改变量foo的函数
+function test(){
+	var foo = 'old test';
+}
+//调用test
+test();
+console.log(foo == 'new test');
+
+var test = 'test';
+console.log(window.test == test);
+
 
 </script>
 </body>

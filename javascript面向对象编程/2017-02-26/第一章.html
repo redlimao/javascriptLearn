@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>现代javascript编程</title>
+	<link rel="stylesheet" type="text/css" href="../bootstrap/bootstrap.css">
+</head>
+<body>
+	<div class="container">
+		<h1>Introduction to the DOM</h1>
+		<p class="test">There are a number of reasons why the DOM is awesome,here are some:</p>
+		<ul>
+			<li id="everywhere">It can be found everywhere</li>
+			<li class="test">it is easy to use</li>
+			<li class="test">it can help you to find what you what,really quicly.</li>
+		</ul>		
+	</div>
+<script>
+//类Lecture的构造器
+//使用两个字符串参数name和teacher
+function Lecture(name,teacher){
+	//把他们做成对象的本地属性保存
+	this.name = name;
+	this.teacher = teacher;
+}
+
+//类Lecture的方法，生成一个显示该课程信息的字符串
+Lecture.prototype.display = function(){
+	return this.teacher + "is teaching " + this.name;
+}
+
+//类Schedule的构造器
+//使用一个lecturse类型的数组作为参数
+function Schedule(lectures){
+	this.lectures = lectures;
+}
+
+//类Schedule的方法，用来构造一个描述该课程表的字符串
+Schedule.prototype.display = function(){
+	var str ="";
+	//遍历每门课程，累加构成信息字符串
+	for(var i = 0; i < this.lectures.length ; i++){
+		str += this.lectures[i].display() + " ";
+	}
+	return str;
+}
+
+var mySchedule = new Schedule([
+		//创建一个课程对象的数组
+		//作为传给课表对象的唯一参数
+		new Lecture('语文','小黄'),
+		new Lecture('数学','夏利'),
+		new Lecture('英语','小路')
+	]);
+console.log(mySchedule.display());
+console.log(new Lecture('语文','小黄'));
+
+//DOM脚本编程
+//知道文档完全加载，我们才能操作DOM
+window.onload = function(){
+	//找到文档中所有的li元素
+	var li = document.getElementsByTagName('li');
+	//给他们全部加上边框
+	for(var i = 0; i < li.length ; i++){
+		li[i].style.border = '1px solid #000';
+		//事件
+		li[i].onmouseover = function(){
+			this.style.backgroundColor = 'blue';
+		};
+
+		li[i].onmouseout = function(){
+			this.style.backgroundColor = 'white';
+		}
+	}
+	//定位ID为everywhere的元素
+	var every = document.getElementById('everywhere');
+	//并将它从文档中移除
+	every.parentNode.removeChild(every);
+	
+
+}
+
+//一天的饮食安排
+// function Bite(food,kinds){
+// 	this.food = food;
+// 	this.kinds = kinds;
+// }
+// Bite.prototype.gets = function(){
+// 	return this.food + "属于：" + this.kinds;
+// }
+
+// function Person(time,thing){
+// 	this.time = time;
+// 	this.thing = thing;
+// }
+// Person.prototype.gets = function(){
+// 	var str1 = '';
+// 	for(var i = 0 ; i < this.thing.length ; i++){
+// 		str1[i] += this.thing[i].gets() + ','+ this.time[i];
+// 	}
+// 	return str1;
+// }
+
+// var person1 = new Person(['morning','afternoon','night'],[
+// 		new Bite('面包','甜品'),
+// 		new Bite('黄瓜','蔬菜'),
+// 		new Bite('牛肉','肉类')
+// 	]);
+// console.log(person1.gets());
+
+
+
+</script>
+</body>
+</html>

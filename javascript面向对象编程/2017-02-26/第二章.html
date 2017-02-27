@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>面向对象的javascript</title>
+	<link rel="stylesheet" type="text/css" href="../bootstrap/bootstrap.css">
+</head>
+<body>
+
+<script>
+//多变量引用单个对象的示例
+
+//设置obj为一个空对象
+var obj = new Object();
+//objRef现在引用了别的对象
+var objRef = obj;
+//修改原始对象的属性
+obj.oneProperty = true;
+console.log(obj.oneProperty === objRef.oneProperty);
+
+//自修改对象
+
+//创建一组项目的数组
+var items = new Array("one","two",'three');
+//创建一个对项目数组的引用
+var itemRef = items;
+//给原始数组添加一项
+items.push('four');
+//这两个数组的长度相同
+console.log(items.length === itemRef.length);
+
+//改变一个对象的引用，
+
+//设置items为一个字符串的数组
+var items = new Array('one','two','three');
+//设置itemsRef为对象items的引用
+var itemsRef = items;
+//让items指向一个新的对象
+items = new Array('new','array');
+//items和itemsRef
+//现在指向不同的对象
+//items 指向 new Array('new','array')
+//itemsRef 指向 new Array('one','two','three');
+console.log(items !== itemsRef);
+
+//函数重载
+function sendMessage(msg,obj){
+	//如果同时提供了一个消息和一个对象
+	if(arguments.length == 2){
+		//就将消息发给该对象
+		obj.handleMsg(msg);
+	}else{
+		alert(msg);
+	}
+}
+
+sendMessage('Hello,World');
+//或者我们也可以传入我们自己的对象用
+//一种不同方式来显示消息
+sendMessage('How are you?',{
+	handleMsg : function(msg){
+		alert('This is a custom message:' + msg);
+	}
+})
+
+//一个使用任意数目参数创建一个数组的函数
+function makeArray(){
+	//临时数组
+	var arr = [];
+	//遍历提交的每一个参数
+	for(var i = 0; i <arguments.length;i++){
+		arr.push(arguments[i]);
+	}
+	//返回结果数组
+	return arr;
+}
+//显示错误消息和缺省消息
+function displayError(msg){
+	//检查确保msg不是undefined
+	if(typeof msg == 'undefined'){
+		//如果是，则设置缺省消息
+		msg = 'An error occurred.';
+	}
+	//显示信息
+	alert(msg);
+}
+
+
+//使用typeof决定对象类型的示例
+//检查我们的数字是否其实是一个字符串
+
+(function(){
+	var num = '123';
+	var arr = [1,5,8];
+	if(typeof num == 'string'){
+		//如果是，则将它解析成数字
+		num = parseInt(num);
+	}
+
+	if(typeof arr == 'string'){
+		arr = arr.split(',');
+	}
+
+	//检查我们的数字是否其实是一个字符串
+	if(num.contructor == String){
+		//如果是，则将她解析成数字
+		num = parseInt(num);
+	}
+	///检查我们的字符串是否其实是一个数组
+	if(arr.constructor == Array){
+		arr = arr.join(',');
+	}
+})();
+
+//依据参数列表来严格地检查一个变量列表的类型
+function strict(types,args){
+	//确保参数的数目和类型匹配
+	if(typeof.length != args.length){
+		//如果长度不匹配，则抛出异常
+		throw "Invalid number of arguments. EXpected" + types.length +",received "+ args.length + "instead.";
+	}
+	//遍历每一个参数，检查基类型
+	for( var i = 0; i < args.length;i++){
+		//如果javascript某一项类型不匹配，则抛出异常
+		if(args[i].constructor != types[i]){
+			throw "Invalid argument type. EXpected "+ types[i].name + ",received"+ args[i].constructor.name + 'instead.';
+		}
+	}
+}
+//用来打印出用户列表的一个简单函数
+function userList(prefix,num,users){
+	//确保prefix是一个字符串，num是一个数字
+	//且user是一个数组
+	strict([String,Number,Array],arguments);
+	//循环处理num个用户
+	for(var i = 0; i < num; i++){
+		//显示一个用户的信息
+		print(prefix + ":"+users[i]);
+	}
+}
+
+//变量作用域
+//设置一个等于test的全局变量foo
+var foo = 'test';
+//在if块中
+if(true){
+	//设置foo为new test
+	//注意：这仍然是在全局作用域中
+	var foo = "new test";
+}
+//
+
+</script>
+</body>
+</html>

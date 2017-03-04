@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>基本概念回顾</title>
+</head>
+<body>
+<ul>
+	<li>123</li>
+	<li>456</li>
+	<li>789</li>
+	<li>102</li>
+	<li>2556</li>
+</ul>
+	<script>
+	//变量
+	function test(){
+		message = 'hi';
+	}
+	// console.log(message);
+	test();
+	//调用了test，这个变量就有了定义
+	console.log(message);
+
+	//数据类型
+	//undefined、null、boolean、number、string
+	//object
+	//ECMAScript不支持任何创建自定义类型的机制，而所有值最终都将上上述6种数据类型之一
+
+	//typeof 操作符
+		var a1;
+		var a2 = true;
+		var a3 = 1 + "";
+		var a4 = 12;
+		var a5 = new Object();
+		var a6 = test;
+		console.log('a1的数据类型为：'+ typeof a1);	
+		console.log('a2的数据类型为：'+ typeof a2);
+		console.log('a3的数据类型为：'+ typeof a3);
+		console.log('a4的数据类型为：'+ typeof a4);
+		console.log('a5的数据类型为：'+ typeof a5);
+		console.log('a6的数据类型为：'+ typeof a6);
+
+	//Undefined类型
+		console.log(a1 == undefined);
+
+		//包含undefined值的变量与尚未定义的变量是不一样的
+		console.log(a1);
+		// console.log(a7); 会显示错误尚未声明的变量
+		console.log(typeof a7); //返回undefined
+
+		//Null类型
+		//是第二个只有一个值的类型
+		//从逻辑角度来看，null值表示一个空对象指针
+		var car = null;
+		console.log(typeof car);//object
+		//如果定义的变量准备用来保存对象，使用null进行初始化
+
+		//实际上undefined值是派生自null值
+		console.log(null == undefined); //true
+		console.log(null === undefined); //false
+
+	//Boolean类型
+		//true false
+		var boolean1 = 'Hello world';
+		var messbool = Boolean(boolean1);
+		console.log(messbool);
+
+		//数据类型转换
+		var string1 = Boolean('123');
+		var string2 = Boolean('');
+		console.log(string1);//true
+		console.log(string2);//false
+
+		var num1 = Boolean(123);
+		var num2 = Boolean(0);
+		console.log(num1);//true
+		console.log(num2);//false
+
+		var object1 = Boolean(new Date());
+		var object2 = Boolean(null);
+		console.log(object1);//true
+		console.log(object2);//false
+		if(boolean1){console.log('Value is true');}
+
+	//Number类型
+		//最基本的数值字面量格式是十进制整数
+	var nums1 = 1.2;
+	console.log(nums1);
+	//NaN非数值，任何数值除于0会返回NaN
+	console.log(NaN === NaN);
+	//数值转换
+	//Number()、parseInt()、parseFloat()
+	console.log(Number(true));
+	console.log(Number(false));
+	console.log(Number(null));
+	console.log(Number(undefined));
+	console.log(Number('123'));
+	console.log(Number('00123'));
+
+	//parseInt在转换字符串时，是看其是否符合数值模型，他会忽略字符串前面的空格，直到找到第一个非空格字符
+	console.log(parseInt('123ll'));
+	console.log(parseInt('  123ll'));
+
+	//String类型
+	var nums = 10;
+	console.log(nums.toString());
+	var num_s =	null;
+	console.log(String(num_s));
+
+	//object
+	//是所有它的实例的基础，object类型所具有的任何属性和方法也同样存在于更具体的对象中
+	//每个实例都具有下列属性和方法：
+	//1.Constructor:保存着用于创建当前对象的函数。对于前面的例子而言，构造函数就是Object()
+	//2.hasOwnproperty:用于检查给定的属性在当前对象实例中是否存在，其中，作为参数的属性名必须以字符串形式指定。
+	//3.isPrototypeOf(object):用于检查传入的对象是否是另外一个对象的原型
+	//4.propertyIsEnumerable(propertyName):用于检查给定的属性是否能够使用for-in语句来枚举
+	//5.toLocaleString():返回对象的字符串表示，该字符串与执行环境的地区对应
+	//6.toString()返回对象的字符串表示。
+	//7.valueOf()返回对象的字符串、数值或布尔值。
+	var li = document.getElementsByTagName('li');
+	for(var i = 0 ; i < 5 ; i++){
+		// (function(num){
+		// 	console.log(num);
+		// 	li[num].onclick = function(){
+		// 		console.log(num);
+		// 	}			
+		// })(i);
+		(function(num){
+			console.log(num);
+			li[num].onclick = function(){
+				console.log(num);
+			}			
+		})(i);
+
+	}
+	console.log('+++++++');
+	console.log(i);
+
+	</script>
+</body>
+</html>

@@ -103,7 +103,7 @@ function displayError(msg){
 
 	//检查我们的数字是否其实是一个字符串
 	if(num.contructor == String){
-		//如果是，则将她解析成数字
+		//如果是，则将她解析成数字contructor
 		num = parseInt(num);
 	}
 	///检查我们的字符串是否其实是一个数组
@@ -162,6 +162,26 @@ var test = 'test';
 console.log(window.test == test);
 
 
+var link1 = new Array('12','45');
+var link2 = link1;
+link1 = new Array('45','89');
+console.log(link1 !== link2);
+console.log(link1);
+console.log(link2);
+console.log(Object.prototype.toString.call(link1));
+console.log(Object.prototype.toString.call(link2));
+
+
+function Classroom(students,teacher){
+	this.students = students;
+	this.teacher = teacher;
+	this.getThing = function(){
+		console.log(this.students.join(","));
+	}
+}
+
+var classs = new Classroom(["john","Bob"],"Mr.Smith");
+classs.getThing();
 </script>
 </body>
 </html>

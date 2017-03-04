@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	body{font-family: "微软雅黑";}
+	ul{list-style-type: none;}
+	span,ul,a{padding: 0;margin: 0;}
+	a{text-decoration: none;}
+	.c:after,.c:before{content: "";display: table;}
+	.c:after{clear: both;}
+	.c:before{zoom: 1;}
+	ul{margin:100px auto;width: 530px;height: 120px;border:1px solid blue;opacity: 0.8;border-radius: 10px;position: relative;}
+	li{width: 50px;height: 50px;padding:25px;border-radius: 50%;position: absolute;box-shadow: 1px 1px 10px #cccccc;opacity: 0;}
+		li:nth-child(1){background-color: red;left: 5px;bottom: 0;}
+		li:nth-child(2){background-color: red;left: 110px;bottom: 0;}
+		li:nth-child(3){background-color: red;left: 215px;bottom: 0;}
+		li:nth-child(4){background-color: red;left: 320px;bottom: 0;}
+		li:nth-child(5){background-color: red;left: 425px;bottom: 0;}
+	.txt{width: 50px;height: 50px;background-color: #ffffff;border-radius: 50%;display: block;text-align: center;line-height: 50px;font-size: 20px;font-weight: bold;}
+	.btns{width: 530px;margin:0 auto;}
+	.btn-start,.btn-in,.btn-out{float: left;display:inline;padding:0 20px;border-radius: 5px;background-color:red;height: 50px;line-height: 50px;color: #ffffff;margin-right: 20px;}
+
+	.anim-a{-webkit-animation: boo .5s ease-in-out both;-o-animation: boo .5s ease-in-out both;animation: boo .5s ease-in-out both;}
+	.anim-b0{-webkit-animation: down 1.5s ease-in-out both;-o-animation: down 1.5s ease-in-out both;animation: down 1.5s ease-in-out both;}
+	.anim-b1{-webkit-animation: down 1.5s .3s ease-in-out both;-o-animation: down 1.5s .3s ease-in-out both;animation: down 1.5s .3s ease-in-out both;}
+	.anim-b2{-webkit-animation: down 1.5s .6s ease-in-out both;-o-animation: down 1.5s .6s ease-in-out both;animation: down 1.5s .6s ease-in-out both;}
+	.anim-b3{-webkit-animation: down 1.5s .9s ease-in-out both;-o-animation: down 1.5s .9s ease-in-out both;animation: down 1.5s .9s ease-in-out both;}
+	.anim-b4{-webkit-animation: down 1.5s 1.2s ease-in-out both;-o-animation: down 1.5s 1.2s ease-in-out both;animation: down 1.5s 1.2s ease-in-out both;}
+	@keyframes boo{from{transform:translateX(0) rotate(0);}to{transform:translateX(-105px) rotate(33.44deg);}}
+	@keyframes down{from{opacity: 0;}to{opacity: 1;}}
+	</style>
+</head>
+<body>
+	<ul>
+		<li><span class="txt">10</span></li>
+		<li><span class="txt">10</span></li>
+		<li><span class="txt">10</span></li>
+		<li><span class="txt">10</span></li>
+		<li><span class="txt">10</span></li>
+	</ul>
+	<div class="btns c">
+		<a href="javascript:;" class="btn-start">初始化</a>
+		<a href="javascript:;" class="btn-in">进</a>
+		<a href="javascript:;" class="btn-out">出</a>
+	</div>
+<script>
+	
+	var boo = {
+		boos : document.getElementsByTagName('li'),
+		numbers : document.getElementsByTagName('span'),
+		btn_start : document.querySelector('.btn-start'),
+		btn_in : document.querySelector('.btn-in'),
+		btn_out : document.querySelector('.btn-out'),
+		startAnimate : function(){
+			var randombooslength = Math.ceil(Math.random()*5);
+			var arr = [];
+			this.btn_start.addEventListener('click',function(event){
+				for(var i = 0 ; i < randombooslength ; i++){
+					arr[i] = Math.ceil(Math.random()*99);
+					for(var j = 0 ; j < arr.length ; j++){
+						this.boos[j].className = 'anim-b' + j;
+						this.numbers[j].innerHTML = arr[j];
+					}
+				}		
+				console.log(arr);		
+			},false);
+		}
+
+	}
+
+	boo.startAnimate();
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>上下文</title>
+</head>
+<body>
+	<div id="main">456798</div>
+<script>
+	var obj = {
+		yes : function(){
+			//this == obj
+			this.val = true;
+		},
+		no : function(){
+			this.val = false;
+		}
+	}
+	console.log(obj.val == null);
+	obj.yes();
+	console.log(obj.val == true);
+	window.no = obj.no;
+	window.no();
+	console.log(obj.val == true);
+	console.log(window.val == false);
+
+	//设置其上下文的颜色风格的函数
+	function changeColor(color){
+		this.style.color = color;
+	}
+	//在window对象上调用这个函数将会出错，因为window没有style对象
+	// changeColor('white');
+	var main = document.getElementById('main');
+	//用call方法将第一个参数设置为上下文
+	//并其它所有参数传递给函数
+	changeColor.call(main,'red');
+	//一个设置body元素的颜色的函数
+	function setBodyColor(){
+		//apply 方法设置上下文为body元素
+		//第一个参数为设置的上下文
+		//第二个参数是一个被作为参数传递给函数的数组
+		changeColor.apply(document.body,arguments);
+	}
+	//设置body元素颜色为黑色
+	setBodyColor("black");
+
+	//创建一个新的对象并将其存放在obj中
+	var obj = new Object();
+	//将该对象的一些属性设置成不同的值
+	obj.val = 5;
+	obj.click = function(){
+		alert('hello');
+	}
+	//下面是等效的代码
+	var obj = {
+		val : 5,
+		click : function(){
+			alert('hello');
+		}
+	}
+	//对象能够创建新的对象，对象能够继承自其他对象
+	//任何一个函数都能作为一个对象被实例化
+
+
+	//
+	function User(name){
+		this.name = name;
+	}
+
+	//用指定的name创建上述函数的新实例
+	var me = new User('My name');
+	//我们可以看到name已经称为对象本身的属性
+	console.log(me.name == 'My name');//true
+
+	//而且它确实是User对象的一个新实例
+	console.log(me.constructor == User);//true
+	console.log(User instanceof Object);//true
+
+	User('Test');
+	//因为this上下文没有被设置。他指向全局的window对象
+	//这意味着window.name将等于我们提供给它的那个name
+	console.log(window.name == "Test"); //true
+
+	//创建一个新的、简单的User对象
+	function User(){}
+	var me = new User();
+	var you = new me.constructor();
+	//其实他们的constructor是同一个
+	console.log(me.constructor == you.constructor);//true
+
+	//公有方法
+	function User (name , age){
+		this.name = name;
+		this.age = age;
+	}
+	//为prototype对象添加一个新方法
+	User.prototype.getName = function(){
+		return this.name;
+	};
+
+	//为prototype对象添加另一个方法
+	User.prototype.getAge = function(){
+		return this.age;
+	}
+
+	//实例化一个新的User对象
+	var user = new User('Bob',44);
+	//这两个方法被附加到了对象上，有着正确的上下文
+	console.log(user.getName() == 'Bob'); //true
+	console.log(user.age == 44); //true
+
+	//私有方法
+
+	//一个表示教室的对象构造器
+	function Classroom(students,teacher){
+		//用来显示教师中的所有学生的私有方法
+		function disp(){
+			console.log(this.name.join(', '));
+		}
+
+		//课程的数据存储在公有的对象属性里
+		this.students = students;
+		this.teacher = teacher;
+		//调用私有方法显示错误
+		// disp();
+	}
+
+	var classs = new Classroom(["John","Bob"],"Mr.Smith");
+	// classs.disp();
+
+	//特权方法
+
+	// function User(name,age){
+	// 	//计算用户的出生年份
+	// 	var year = (new Date()).getFullYear() - age;
+	// 	//创建一个新特权方法，对变量year有访问权
+	// 	//但又是公共可访问的
+	// 	this.getYearBorn = function(){
+	// 		return year;
+	// 	}
+	// }
+
+	// var user = new User('Bob',22);
+	// console.log(user.getYearBorn() == 1995);
+	// console.log(user.year == null);
+
+	//新对象初始化时创建的动态方法
+	function User(properties){
+		//遍历对象属性，确保它作用域正确
+		for(var i in properties){
+			(function(which){
+				var p = i;
+				//为属性创建获取器
+				which['get' + i] = function(){
+					return properties[p];
+				};
+				//为属性创建设置器
+				which["set" + i] = function(val){
+					properties[p] = val;
+				}
+			})(this);
+		}
+	}
+
+	//创建一个新user对象实例，传入一个包含属性的对象作为种子
+	var user = new User({
+		name : 'Bob',
+		age : 44
+	});
+	console.log(user.name == null);//true
+	//name属性并不存在，因为它在properties对象中，是私有的
+	console.log(user.getname());
+	user.setage(22);
+	console.log(user.getage());
+
+	//静态方法
+	//附加在User对象上的一个静态方法
+	User.cloneUser = function(user){
+		//创建并返回一个新的User对象
+		return new User(
+			//该对象是其他user对象的克隆
+			user.getName(),
+			user.getAge()
+		);
+	};
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

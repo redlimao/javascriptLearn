@@ -50,27 +50,42 @@
 	var boo = {
 		boos : document.getElementsByTagName('li'),
 		numbers : document.getElementsByTagName('span'),
-		btn_start : document.querySelector('.btn-start'),
-		btn_in : document.querySelector('.btn-in'),
-		btn_out : document.querySelector('.btn-out'),
-		startAnimate : function(){
-			var randombooslength = Math.ceil(Math.random()*5);
-			var arr = [];
-			this.btn_start.addEventListener('click',function(event){
-				for(var i = 0 ; i < randombooslength ; i++){
-					arr[i] = Math.ceil(Math.random()*99);
-					for(var j = 0 ; j < arr.length ; j++){
-						this.boos[j].className = 'anim-b' + j;
-						this.numbers[j].innerHTML = arr[j];
-					}
-				}		
-				console.log(arr);		
-			},false);
+		arr:[],
+		iniBoo : function(){
+			for(var i = 0 ; i < Math.ceil(Math.random()*5) ; i++){
+				this.arr[i] = Math.ceil(Math.random()*99);
+			}
+		},
+		animate : function(){
+			for(var j = 0 ; j < this.arr.length ; j++){
+				this.boos[j].className = "";
+				this.boos[j].className = 'anim-b' + j;
+				this.numbers[j].innerHTML = this.arr[j];
+			}
+		},
+		addBoo : function(element){
+			this.arr.push(element);
+			this.animate();
+			console.log(this.arr.length);
+			if(this.arr.length > 5){
+				this.arr.shift();
+			}
 		}
 
 	}
+	var btn_start = document.querySelector('.btn-start'),
+		btn_in = document.querySelector('.btn-in'),
+		btn_out = document.querySelector('.btn-out');
 
-	boo.startAnimate();
+	btn_start.onclick = function(){
+		boo.iniBoo();
+		boo.animate();
+	}
+	btn_in.onclick = function(){
+		boo.addBoo(Math.ceil(Math.random()*99));
+	}
+
+	// boo.startAnimate();
 
 
 
